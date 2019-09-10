@@ -4,6 +4,8 @@ import info.xonix.utils.Check;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
+import info.xonix.zlo.search.utils.URLUtil;
+
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpVersion;
@@ -54,7 +56,7 @@ public class PageRetriever implements InitializingBean {
     }
 
     public String getPageContentByNumber(WwwconfParams wwwconfParams, int num) throws RetrieverException {
-        return getPageText("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + num, wwwconfParams);
+        return getPageText(URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + wwwconfParams.getReadQuery() + num, wwwconfParams);
     }
 
     /**
@@ -65,7 +67,7 @@ public class PageRetriever implements InitializingBean {
      * @throws RetrieverException on i/o exception
      */
     public int getLastRootMessageNumber(WwwconfParams wwwconfParams) throws RetrieverException {
-        String rootPageText = getPageText("http://" + wwwconfParams.getSiteUrl(), wwwconfParams);
+        String rootPageText = getPageText(URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()), wwwconfParams);
 
         Matcher msgLinkMatcher = wwwconfParams.getLinkIndexRe().matcher(rootPageText);
         List<Integer> ids = new LinkedList<Integer>();

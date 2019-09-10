@@ -9,6 +9,8 @@ import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.utils.HtmlUtils;
+import info.xonix.zlo.search.utils.URLUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -62,19 +64,19 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     }
 
     private String forumMsgUrlStart() {
-        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery();
+        return URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + wwwconfParams.getReadQuery();
     }
 
     @Override
     public String prepareUserProfileUrl(String userId, String userName) {
-        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery()
+        return URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + wwwconfParams.getUinfoQuery()
                 + HtmlUtils.urlencode(userName, wwwconfParams.getSiteCharset());
     }
 
     @Override
     public String getForumUrl() {
         final String siteUrl = wwwconfParams.getSiteUrl();
-        return "http://" + siteUrl + (siteUrl.endsWith(".cgi") ? "" : "/");
+        return URLUtil.getURLWithProto(siteUrl) + (siteUrl.endsWith(".cgi") ? "" : "/");
     }
 
     @Override
@@ -109,4 +111,5 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     public boolean supportsParents() {
         return wwwconfParams.getParentExtractMethod() != null;
     }
+    
 }
