@@ -11,6 +11,8 @@ import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.domain.MessageStatus;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
+import info.xonix.zlo.search.utils.URLUtil;
+
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
@@ -166,7 +168,7 @@ class Convert {
         Forum forum = OBJECT_FACTORY.createForum();
 
         forum.setName(wwwconfParams.getSiteDescription());
-        forum.setUrl("http://" + wwwconfParams.getSiteUrl() + "/");
+        forum.setUrl(URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + "/");
         forum.setType("tree");
         forum.setCharset(wwwconfParams.getSiteCharset());
 
@@ -188,8 +190,8 @@ class Convert {
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();
-        forumUrls.setMessageUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
-        forumUrls.setUserProfileUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
+        forumUrls.setMessageUrl(URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + wwwconfParams.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
+        forumUrls.setUserProfileUrl(URLUtil.getURLWithProto(wwwconfParams.getSiteUrl()) + wwwconfParams.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
         forum.setForumUrls(forumUrls);
 
         return forum;
